@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Downloaded / derived SDF data (see scripts/download_sdf_data.sh)
+data/sdf/*.ply
+data/sdf/*.xyz
+data/sdf/*.npy
+
+# Experiment outputs, written next to the repo root as <stem>_<task>/
+*_signal_fitting/
+*_image_fitting/
+*_image_denoising/
+*_image_inpainting/
+*_image_super_resolution/
+*_sdf_fitting/
+*_ct_scanning/
+*_poisson_solver/
+
+# Editors and job output
+.vscode/
+.idea/
+*.out

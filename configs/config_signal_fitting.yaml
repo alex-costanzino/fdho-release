@@ -1,0 +1,70 @@
+log: True
+net:
+  model_name: oscillator
+  in_features: 1
+  oscillator:
+    omega: 45.0
+    omega_n: 50.0
+    xi: 0.707
+    phi: 0.0
+    learn_params: True
+    lr_linear: 1e-4
+    lr_physics: 1e-2
+    hidden_features: 256
+    hidden_layers: 5
+  siren:
+    omega_0: 30.0
+    hidden_features: 256
+    hidden_layers: 5
+    lr: 1e-4
+  gaussian:
+    sigma: 0.1
+    hidden_features: 256
+    hidden_layers: 5
+    lr: 1e-4
+  wire:
+    omega_0: 20.0
+    scale: 30.0
+    hidden_features: 256
+    hidden_layers: 2
+    lr: 5e-3
+  bacon:
+    frequency_limit: 2048
+    quantize_freq: True
+    hidden_features: 128
+    hidden_layers: 4
+    lr: 1e-4
+  finer:
+    first_omega_0: 30.0 
+    hidden_omega_0: 30.0 
+    first_bias_scale: None
+    scale_req_grad: False
+    hidden_features: 256
+    hidden_layers: 3
+    lr: 1e-4
+  mfn:
+    weight_scale: 1.0
+    alpha: 6.0
+    hidden_features: 256
+    hidden_layers: 3
+    lr: 1e-2
+  fourier_features:
+    scale: 10.0
+    hidden_features: 256
+    hidden_layers: 4
+    lr: 1e-4
+  fr:
+    high_freq_num: 256
+    hidden_features: 256
+    hidden_layers: 5
+    lr: 1e-4
+train:
+  steps: 10000
+data:
+  type: audio
+  signal: chirp_signal
+  num_samples: 2200
+  chirp_freq_low: 1
+  chirp_freq_high: 1000
+  square_wave_freq: 500
+  audio_path: data/audio/gt_counting.wav
