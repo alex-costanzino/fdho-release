@@ -11,21 +11,16 @@ Luigi Di Stefano<sup>1</sup>
 
 [Project page](https://alex-costanzino.github.io/fdho/) · [arXiv](https://arxiv.org/abs/2606.23129)
 
-Official implementation of the forced damped harmonic oscillator (FDHO) activation for implicit
-neural representations. The activation is the steady-state amplitude response of a sine-forced damped
-oscillator,
+Official implementation of the forced damped harmonic oscillator (FDHO) activation for implicit neural representations. 
+The activation is the steady-state amplitude response of a sine-forced damped oscillator:
 
 ```
 activation(z) = sin(omega * z + phi) / sqrt((omega_n^2 - omega^2)^2 + (2 * xi * omega_n * omega)^2)
 ```
 
-where the forcing frequency `omega`, natural frequency `omega_n`, damping ratio `xi` and phase `phi`
-are learned per layer alongside the linear weights. The implementation lives in
-[`models/oscillator.py`](models/oscillator.py).
+where the forcing frequency `omega`, natural frequency `omega_n`, damping ratio `xi` and phase `phi` are learned per layer alongside the linear weights. 
 
-The repository reproduces the comparison against nine INR baselines across seven tasks: 1D signal
-fitting, image fitting, denoising, inpainting, super-resolution, SDF fitting, CT reconstruction and
-Poisson gradient-domain reconstruction.
+The repository reproduces the comparison against nine INR baselines across seven tasks: 1D signal fitting, image fitting, denoising, inpainting, super-resolution, SDF fitting, CT reconstruction and Poisson gradient-domain reconstruction.
 
 ## Installation
 
@@ -44,20 +39,16 @@ pip install -r requirements.txt
 
 ## Data
 
-Images (`data/images/`), audio (`data/audio/`) and the CT phantom (`data/scan/`) ship with the
-repository. The meshes for the SDF experiments do not — they are downloaded from the
-[Stanford 3D Scanning Repository](https://graphics.stanford.edu/data/3Dscanrep/) and converted to the
-oriented point clouds the loader expects:
+Images (`data/images/`), audio (`data/audio/`) and the CT phantom (`data/scan/`) ship with the repository. 
+The meshes for the SDF experiments do not, they are downloaded from the [Stanford 3D Scanning Repository](https://graphics.stanford.edu/data/3Dscanrep/) and converted to the oriented point clouds the loader expects:
 
 ```bash
 bash scripts/download_sdf_data.sh              # armadillo, dragon, lucy, thai_statue
 python scripts/prepare_sdf_data.py             # .ply -> six-column .xyz (x y z nx ny nz)
 ```
 
-Lucy and the Thai statue have ~14M and ~5M vertices, which produce large `.xyz` files that are slow to
-load. Pass `--max-points 2000000` to `prepare_sdf_data.py` to subsample them.
-
-Please cite the Stanford 3D Scanning Repository if you use these meshes.
+Lucy and the Thai statue have ~14M and ~5M vertices, which produce large `.xyz` files that are slow to load. 
+Pass `--max-points 2000000` to `prepare_sdf_data.py` to subsample them.
 
 ## Running
 
@@ -76,18 +67,14 @@ python 05a_poisson_solver.py           --config configs/config_poisson_solver.ya
 ```
 
 `--config` defaults to the path shown, so the scripts also run with no arguments.
-`03b_sdf_meshing.py` extracts and evaluates a mesh from the checkpoint written by `03a_sdf_fitting.py`,
-so run `03a` first.
+`03b_sdf_meshing.py` extracts and evaluates a mesh from the checkpoint written by `03a_sdf_fitting.py`, so run `03a` first.
 
-Results are written to `<input_stem>_<task>/<model_name>/` next to the repository root: the resolved
-config, per-model reconstructions, training curves, and a `logs.json` with PSNR, SSIM, spectral
-fidelity, parameter count, memory and timings averaged over the seeds in
-[`utils/utils.py`](utils/utils.py) (`seeds = [7, 66, 69]`).
+Results are written to `<input_stem>_<task>/<model_name>/` next to the repository root: the resolved config, per-model reconstructions, training curves, and a `logs.json` with PSNR, SSIM, spectral fidelity, parameter count, memory and timings averaged over the seeds in [`utils/utils.py`](utils/utils.py).
 
 ### Reproducing the baseline comparison
 
-By default the scripts run the proposed method alone, so a plain invocation is quick. To sweep every
-model in the paper's tables, edit [`models/models_bank.py`](models/models_bank.py):
+By default the scripts run the proposed method alone.
+To sweep every model in the paper's tables, edit [`models/models_bank.py`](models/models_bank.py):
 
 ```python
 model_names = ALL_MODELS   # oscillator, siren, gaussian, wire, bacon, finer, mfn, fourier_features, fr
@@ -109,8 +96,7 @@ scripts/               SDF data download and preparation
 
 ## Baselines
 
-The baseline implementations are re-implementations of published methods, each attributed in its file
-header:
+The baseline implementations are re-implementations of published methods, each attributed in its file header:
 
 | Model | Paper |
 | --- | --- |
@@ -123,8 +109,7 @@ header:
 | `gaussian` | Ramasinghe and Lucey, *Beyond Periodicity*, ECCV 2022 |
 | `fr` | Shi et al., *Improved INR with Fourier Reparameterized Training*, CVPR 2024 |
 
-The SDF objective in [`utils/losses.py`](utils/losses.py) is adapted from the official SIREN
-implementation (MIT License).
+The SDF objective in [`utils/losses.py`](utils/losses.py) is adapted from the official SIREN implementation (MIT License).
 
 ## Citation
 

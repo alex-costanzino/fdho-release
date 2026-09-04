@@ -35,7 +35,7 @@ def compute_psnr(img_pred, img_gt):
 
 
 # Seeds each task script averages its metrics over.
-seeds = [7, 66, 69]
+seeds = [98, 68, 41, 15, 39, 54, 82, 27, 11, 51]
 
 def set_seed(seed: int = 42):
     random.seed(seed)

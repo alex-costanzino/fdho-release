@@ -1,4 +1,3 @@
-# Install PyTorch first, matched to your CUDA version: https://pytorch.org/get-started/locally/
 torch
 torchvision
 
